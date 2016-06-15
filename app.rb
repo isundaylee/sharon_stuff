@@ -1,10 +1,11 @@
 require 'sinatra'
 require 'open-uri'
 
-URL = 'http://quotes.wsj.com/AAL'
-REGEX = /AAL will report Q2 earnings on (\d\d\/\d\d\/\d\d\d\d)/
+URL = 'http://quotes.wsj.com/%s'
+REGEX = /will report Q2 earnings on (\d\d\/\d\d\/\d\d\d\d)/
 
-get '/' do
-  page = open(URL).read
+get '/:company' do
+  company = params[:company]
+  page = open(URL % company).read
   REGEX.match(page)[1]
 end
